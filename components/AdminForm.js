@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { parseM3U, getStreamType } from '../lib/utils';
 
 export default function AdminForm({ onChannelsAdded }) {
   const [formData, setFormData] = useState({
@@ -20,13 +19,66 @@ export default function AdminForm({ onChannelsAdded }) {
     }));
   };
 
+  // Simple M3U parser function
+  const parseM3U = (content) => {
+    const lines = content.split('\n');
+    const channels = [];
+    let currentChannel = {};
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      if (line.startsWith('#EXTINF:')) {
+        const info = line.substring(8);
+        const commaIndex = info.lastIndexOf(',');
+        const channelName = info.substring(commaIndex + 1).trim();
+        
+        // Extract attributes
+        const attrs = {};
+        const attrMatches = info.substring(0, commaIndex).match(/([a-zA-Z-]+)="([^"]*)"/g) || [];
+        
+        attrMatches.forEach(attr => {
+          const [key, value] = attr.split('=');
+          attrs[key] = value.replace(/"/g, '');
+        });
+
+        currentChannel = {
+          id: `channel_${Date.now()}_${i}`,
+          name: channelName,
+          tvgId: attrs['tvg-id'] || '',
+          tvgName: attrs['tvg-name'] || '',
+          tvgLogo: attrs['tvg-logo'] || '',
+          group: attrs['group-title'] || 'General',
+          url: ''
+        };
+      } else if (line && !line.startsWith('#') && currentChannel.name && !line.startsWith('#EXT')) {
+        // This is the URL line
+        currentChannel.url = line.trim();
+        if (currentChannel.url) {
+          channels.push({ ...currentChannel });
+        }
+        currentChannel = {};
+      }
+    }
+    return channels;
+  };
+
   const fetchPlaylist = async (url) => {
     try {
-      const response = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`);
+      // Direct fetch without proxy for now
+      const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch playlist');
       return await response.text();
     } catch (error) {
-      throw new Error(`Failed to fetch playlist: ${error.message}`);
+      console.error('Fetch error:', error);
+      // Fallback: try with CORS proxy
+      try {
+        const proxyResponse = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+        const data = await proxyResponse.json();
+        return data.contents;
+      } catch (proxyError) {
+        throw new Error(`Failed to fetch playlist: ${proxyError.message}`);
+      }
     }
   };
 
@@ -49,13 +101,15 @@ export default function AdminForm({ onChannelsAdded }) {
 
       // Parse the playlist
       const playlistId = `playlist_${Date.now()}`;
-      const channels = await parseM3U(playlistContent, playlistId);
+      const channels = parseM3U(playlistContent);
 
       if (channels.length === 0) {
-        throw new Error('No valid channels found in the playlist');
+        throw new Error('No valid channels found in the playlist. Please check the format.');
       }
 
-      // Store in localStorage (in real app, send to API)
+      console.log('Parsed channels:', channels); // Debug log
+
+      // Store in localStorage
       const existingChannels = JSON.parse(localStorage.getItem('tv_channels') || '[]');
       const updatedChannels = [...existingChannels, ...channels];
       localStorage.setItem('tv_channels', JSON.stringify(updatedChannels));
@@ -87,6 +141,7 @@ export default function AdminForm({ onChannelsAdded }) {
 
     } catch (error) {
       setError(error.message);
+      console.error('Error:', error);
     } finally {
       setLoading(false);
     }
@@ -97,7 +152,15 @@ export default function AdminForm({ onChannelsAdded }) {
       <h2 style={{ marginBottom: '20px' }}>Add Playlist</h2>
       
       {error && (
-        <div className="error">{error}</div>
+        <div className="error" style={{ 
+          background: '#ff4757', 
+          color: 'white', 
+          padding: '10px', 
+          borderRadius: '5px', 
+          marginBottom: '20px' 
+        }}>
+          {error}
+        </div>
       )}
 
       <form onSubmit={handleSubmit}>
@@ -109,6 +172,7 @@ export default function AdminForm({ onChannelsAdded }) {
             value={formData.name}
             onChange={handleInputChange}
             placeholder="My TV Playlist"
+            disabled={loading}
           />
         </div>
 
@@ -120,6 +184,7 @@ export default function AdminForm({ onChannelsAdded }) {
             value={formData.playlistUrl}
             onChange={handleInputChange}
             placeholder="https://example.com/playlist.m3u"
+            disabled={loading}
           />
         </div>
 
@@ -133,9 +198,14 @@ export default function AdminForm({ onChannelsAdded }) {
             name="playlistContent"
             value={formData.playlistContent}
             onChange={handleInputChange}
-            placeholder="#EXTM3U
-#EXTINF:-1 tvg-id=&quot;channel1&quot; tvg-name=&quot;Channel 1&quot; tvg-logo=&quot;https://example.com/logo.png&quot; group-title=&quot;Entertainment&quot;,Channel 1
-https://example.com/stream1.m3u8"
+            placeholder={`#EXTM3U
+#EXTINF:-1 tvg-id="channel1" tvg-name="Channel 1" tvg-logo="https://example.com/logo.png" group-title="Entertainment",Channel 1
+https://example.com/stream1.m3u8
+
+#EXTINF:-1 tvg-id="channel2" tvg-name="Channel 2" group-title="News",Channel 2  
+https://example.com/stream2.m3u8`}
+            disabled={loading}
+            rows="8"
           />
         </div>
 
@@ -143,10 +213,23 @@ https://example.com/stream1.m3u8"
           type="submit" 
           className="btn"
           disabled={loading}
+          style={{ opacity: loading ? 0.7 : 1 }}
         >
           {loading ? 'Adding Channels...' : 'Add Playlist'}
         </button>
       </form>
+
+      <div style={{ marginTop: '30px', padding: '15px', background: '#2a2a2a', borderRadius: '5px' }}>
+        <h4>M3U Format Example:</h4>
+        <pre style={{ fontSize: '12px', color: '#ccc', overflow: 'auto' }}>
+          {`#EXTM3U
+#EXTINF:-1 tvg-id="channel1" tvg-name="Channel 1" tvg-logo="logo1.png" group-title="Entertainment",Channel 1
+https://example.com/stream1.m3u8
+
+#EXTINF:-1 tvg-id="channel2" tvg-name="Channel 2" group-title="News",Channel 2
+https://example.com/stream2.m3u8`}
+        </pre>
+      </div>
     </div>
   );
 }

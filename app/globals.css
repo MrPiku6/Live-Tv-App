@@ -6,97 +6,156 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: #0f0f0f;
+  background-color: #000000 !important;
   color: white;
+  min-height: 100vh;
 }
 
-.container {
-  max-width: 1200px;
+/* User App Styles */
+.user-container {
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
+  background: #000000;
 }
 
-.header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 1rem 0;
-  margin-bottom: 2rem;
-}
-
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.nav a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.nav a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.grid {
+.channels-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
   margin-top: 20px;
 }
 
 .channel-card {
-  background: #1a1a1a;
-  border-radius: 10px;
-  padding: 20px;
+  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+  border-radius: 12px;
+  padding: 0;
   cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s;
+  transition: all 0.3s ease;
   border: 1px solid #333;
+  overflow: hidden;
+  position: relative;
 }
 
 .channel-card:hover {
   transform: translateY(-5px);
-  background: #2a2a2a;
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+  border-color: #667eea;
 }
 
-.channel-logo {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+.channel-image {
+  width: 100%;
+  height: 160px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 24px;
-}
-
-.player-container {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.video-player {
-  width: 100%;
-  height: 400px;
-  background: #000;
-  border-radius: 10px;
+  position: relative;
   overflow: hidden;
 }
 
+.channel-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.channel-logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+}
+
+.channel-info {
+  padding: 15px;
+}
+
+.channel-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.channel-group {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+.channel-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #333;
+  border-radius: 12px;
+  font-size: 11px;
+  color: #ccc;
+}
+
+/* Admin Panel Styles */
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #0f0f0f;
+  min-height: 100vh;
+}
+
+.admin-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.admin-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-header p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.admin-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 25px;
+  border: 1px solid #333;
+}
+
+.admin-card h2 {
+  margin-bottom: 20px;
+  color: #667eea;
+  font-size: 1.5rem;
+}
+
+/* Form Styles */
 .form-container {
   background: #1a1a1a;
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 30px;
+  border: 1px solid #333;
 }
 
 .form-group {
@@ -105,56 +164,189 @@ body {
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   color: #ccc;
+  font-weight: 500;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #333;
-  border-radius: 5px;
+  border-radius: 8px;
   background: #2a2a2a;
   color: white;
   font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
 }
 
 .form-group textarea {
-  height: 100px;
+  height: 120px;
   resize: vertical;
 }
 
+/* Button Styles */
 .btn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   padding: 12px 30px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  transition: opacity 0.3s;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
 
 .btn:hover {
-  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
 }
 
 .btn-secondary {
   background: #333;
-  margin-left: 10px;
 }
 
+.btn-small {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+/* Player Styles */
+.player-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #000;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #1a1a1a;
+  border-radius: 12px;
+}
+
+.channel-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Shaka Player Custom Styles */
+.shaka-video-container {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+.shaka-video {
+  width: 100%;
+  height: auto;
+}
+
+/* Password Protection */
+.password-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 40px;
+  background: #1a1a1a;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.password-form {
+  margin-top: 30px;
+}
+
+.password-input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #2a2a2a;
+  color: white;
+  font-size: 16px;
+}
+
+/* Loading and Messages */
 .loading {
   text-align: center;
   padding: 50px;
   font-size: 18px;
+  color: #ccc;
 }
 
 .error {
   background: #ff4757;
   color: white;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 15px;
+  border-radius: 8px;
   margin-bottom: 20px;
+  text-align: center;
+}
+
+.success {
+  background: #2ed573;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Search Bar */
+.search-container {
+  margin-bottom: 30px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 20px;
+  border: 1px solid #333;
+  border-radius: 25px;
+  background: #1a1a1a;
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .channels-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .admin-header h1 {
+    font-size: 2rem;
+  }
 }

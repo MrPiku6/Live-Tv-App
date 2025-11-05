@@ -1,16 +1,14 @@
 import './globals.css'
-import Header from '../components/Header'
 
 export const metadata = {
-  title: 'Live TV App',
+  title: 'Live TV',
   description: 'Watch live TV channels',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
-        <Header />
+      <body style={{ backgroundColor: '#000000', margin: 0, padding: 0 }}>
         {children}
       </body>
     </html>

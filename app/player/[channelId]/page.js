@@ -34,16 +34,18 @@ export default function PlayerPage() {
 
   if (loading) {
     return (
-      <div className="loading">Loading channel...</div>
+      <div className="player-container">
+        <div className="loading">Loading channel...</div>
+      </div>
     );
   }
 
   if (!channel) {
     return (
-      <div className="container">
+      <div className="player-container">
         <div className="error">Channel not found</div>
         <button onClick={() => router.back()} className="btn">
-          Go Back
+          Go Back to Channels
         </button>
       </div>
     );
@@ -53,49 +55,71 @@ export default function PlayerPage() {
 
   return (
     <div className="player-container">
-      <div style={{ marginBottom: '20px' }}>
-        <button onClick={() => router.back()} className="btn btn-secondary">
-          ← Back to Channels
-        </button>
-      </div>
-
-      <div style={{ 
-        background: '#1a1a1a', 
-        padding: '20px', 
-        borderRadius: '10px',
-        marginBottom: '20px'
-      }}>
-        <h1>{channel.name}</h1>
-        <p style={{ color: '#ccc' }}>{channel.group}</p>
+      <div className="player-header">
+        <div>
+          <button 
+            onClick={() => router.back()} 
+            className="btn btn-secondary"
+            style={{ marginRight: '15px' }}
+          >
+            ← Back
+          </button>
+          <span className="channel-title">{channel.name}</span>
+          <div style={{ 
+            display: 'inline-block',
+            marginLeft: '15px',
+            padding: '4px 12px',
+            background: '#333',
+            borderRadius: '12px',
+            fontSize: '12px',
+            color: '#ccc'
+          }}>
+            {channel.group}
+          </div>
+        </div>
         <div style={{ 
-          display: 'inline-block',
-          padding: '5px 10px',
-          background: '#333',
-          borderRadius: '15px',
-          fontSize: '12px',
-          marginTop: '10px'
+          padding: '8px 16px', 
+          background: '#2a2a2a', 
+          borderRadius: '12px',
+          fontSize: '14px',
+          color: '#ccc'
         }}>
           {streamType.toUpperCase()} Stream
         </div>
       </div>
 
-      <VideoPlayer url={channel.url} type={streamType} />
+      <VideoPlayer 
+        url={channel.url} 
+        type={streamType}
+        channelName={channel.name}
+      />
 
       <div style={{ 
         marginTop: '20px', 
-        padding: '15px', 
+        padding: '20px', 
         background: '#1a1a1a', 
-        borderRadius: '10px',
-        fontSize: '14px',
-        color: '#ccc'
+        borderRadius: '12px',
+        border: '1px solid #333'
       }}>
-        <strong>Stream URL:</strong>
-        <div style={{ 
-          wordBreak: 'break-all',
-          marginTop: '5px',
-          fontFamily: 'monospace'
-        }}>
-          {channel.url}
+        <h3 style={{ marginBottom: '15px', color: '#667eea' }}>Stream Information</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '10px', color: '#ccc' }}>
+          <div><strong>Channel:</strong></div>
+          <div>{channel.name}</div>
+          
+          <div><strong>Group:</strong></div>
+          <div>{channel.group}</div>
+          
+          <div><strong>Format:</strong></div>
+          <div>{streamType.toUpperCase()}</div>
+          
+          <div><strong>URL:</strong></div>
+          <div style={{ 
+            wordBreak: 'break-all',
+            fontFamily: 'monospace',
+            fontSize: '12px'
+          }}>
+            {channel.url}
+          </div>
         </div>
       </div>
     </div>

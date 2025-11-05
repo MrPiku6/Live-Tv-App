@@ -7,29 +7,35 @@ export default function ChannelCard({ channel }) {
   return (
     <Link href={`/player/${channel.id}`} style={{ textDecoration: 'none' }}>
       <div className="channel-card">
-        <div className="channel-logo">
+        <div className="channel-image">
           {channel.tvgLogo ? (
             <img 
               src={channel.tvgLogo} 
               alt={channel.name}
-              style={{ width: '100%', height: '100%', borderRadius: '10px' }}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
             />
-          ) : (
-            <span>{generateLogo(channel.name)}</span>
-          )}
+          ) : null}
+          <div 
+            className="channel-logo"
+            style={{ 
+              display: channel.tvgLogo ? 'none' : 'flex',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            }}
+          >
+            {generateLogo(channel.name)}
+          </div>
         </div>
-        <h3 style={{ marginBottom: '5px', color: 'white' }}>{channel.name}</h3>
-        <p style={{ color: '#ccc', fontSize: '14px' }}>{channel.group}</p>
-        <div style={{ 
-          marginTop: '10px', 
-          padding: '5px 10px', 
-          background: '#333', 
-          borderRadius: '15px', 
-          fontSize: '12px',
-          display: 'inline-block'
-        }}>
-          {channel.url.includes('.m3u8') ? 'HLS' : 
-           channel.url.includes('.mpd') ? 'DASH' : 'LIVE'}
+        <div className="channel-info">
+          <div className="channel-name">{channel.name}</div>
+          <div className="channel-group">{channel.group}</div>
+          <div className="channel-badge">
+            {channel.url.includes('.m3u8') ? 'HLS' : 
+             channel.url.includes('.mpd') ? 'DASH' : 
+             channel.url.includes('.ts') ? 'TS' : 'LIVE'}
+          </div>
         </div>
       </div>
     </Link>

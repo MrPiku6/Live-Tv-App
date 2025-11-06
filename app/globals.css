@@ -6,325 +6,31 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: #000000 !important;
+  background-color: #1F2937 !important; /* Changed background color to match screenshot */
   color: white;
   min-height: 100vh;
 }
 
-/* User App Styles */
+/* Main App Container */
 .user-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
-  background: #000000;
+  background: #1F2937; /* Consistent background */
 }
 
-.channels-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.channel-card {
-  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-  border-radius: 12px;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 1px solid #333;
-  overflow: hidden;
-  position: relative;
-}
-
-.channel-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
-  border-color: #667eea;
-}
-
-.channel-image {
-  width: 100%;
-  height: 160px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.channel-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.channel-logo {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 16px;
-  color: white;
-}
-
-.channel-info {
-  padding: 15px;
-}
-
-.channel-name {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: white;
-}
-
-.channel-group {
-  font-size: 14px;
-  color: #ccc;
-  margin-bottom: 8px;
-}
-
-.channel-badge {
-  display: inline-block;
-  padding: 4px 8px;
-  background: #333;
-  border-radius: 12px;
-  font-size: 11px;
-  color: #ccc;
-}
-
-/* Admin Panel Styles */
-.admin-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background: #0f0f0f;
-  min-height: 100vh;
-}
-
-.admin-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2rem;
-  border-radius: 15px;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.admin-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.admin-header p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
-}
-
-.admin-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin-top: 30px;
-}
-
-.admin-card {
-  background: #1a1a1a;
-  border-radius: 12px;
-  padding: 25px;
-  border: 1px solid #333;
-}
-
-.admin-card h2 {
-  margin-bottom: 20px;
-  color: #667eea;
-  font-size: 1.5rem;
-}
-
-/* Form Styles */
-.form-container {
-  background: #1a1a1a;
-  padding: 30px;
-  border-radius: 12px;
-  margin-bottom: 30px;
-  border: 1px solid #333;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  color: #ccc;
-  font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #333;
-  border-radius: 8px;
-  background: #2a2a2a;
-  color: white;
-  font-size: 16px;
-  transition: border-color 0.3s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-.form-group textarea {
-  height: 120px;
-  resize: vertical;
-}
-
-/* Button Styles */
-.btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.btn-danger {
-  background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
-}
-
-.btn-secondary {
-  background: #333;
-}
-
-.btn-small {
-  padding: 8px 16px;
-  font-size: 14px;
-}
-
-/* Player Styles */
-.player-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background: #000;
-}
-
-.player-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 20px;
-  background: #1a1a1a;
-  border-radius: 12px;
-}
-
-.channel-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-/* Shaka Player Custom Styles */
-.shaka-video-container {
-  border-radius: 12px;
-  overflow: hidden;
-  background: #000;
-}
-
-.shaka-video {
-  width: 100%;
-  height: auto;
-}
-
-/* Password Protection */
-.password-container {
-  max-width: 400px;
-  margin: 100px auto;
-  padding: 40px;
-  background: #1a1a1a;
-  border-radius: 15px;
-  text-align: center;
-  border: 1px solid #333;
-}
-
-.password-form {
-  margin-top: 30px;
-}
-
-.password-input {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid #333;
-  border-radius: 8px;
-  background: #2a2a2a;
-  color: white;
-  font-size: 16px;
-}
-
-/* Loading and Messages */
-.loading {
-  text-align: center;
-  padding: 50px;
-  font-size: 18px;
-  color: #ccc;
-}
-
-.error {
-  background: #ff4757;
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.success {
-  background: #2ed573;
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Search Bar */
+/* Search Bar Styles */
 .search-container {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+  padding: 0 10px;
 }
 
 .search-input {
   width: 100%;
   padding: 15px 20px;
-  border: 1px solid #333;
-  border-radius: 25px;
-  background: #1a1a1a;
+  border: 1px solid #374151;
+  border-radius: 16px; /* Adjusted border-radius to be less round */
+  background: #2a3442;
   color: white;
   font-size: 16px;
   transition: all 0.3s;
@@ -333,20 +39,91 @@ body {
 .search-input:focus {
   outline: none;
   border-color: #667eea;
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
 }
 
+.search-input::placeholder {
+  color: #9CA3AF;
+}
+
+
+/* Channels Grid */
+.channels-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Set to 2 columns like the screenshot */
+  gap: 20px; /* Adjusted gap */
+  padding: 0 10px;
+}
+
+/* New Channel Card Styles to match Screenshot */
+.channel-card {
+  background: #2a3442;
+  border-radius: 16px;
+  padding: 20px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.channel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.favorite-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #E5E7EB;
+  width: 24px;
+  height: 24px;
+}
+
+.channel-logo-container {
+  width: 90px;
+  height: 90px;
+  background-color: #1F2937;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.channel-logo-container img {
+  width: 75%;
+  height: auto;
+  object-fit: contain;
+}
+
+.channel-info {
+  padding: 0;
+}
+
+.channel-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #F9FAFB;
+}
+
+.channel-group {
+  font-size: 0.85rem;
+  color: #9CA3AF;
+}
+
+
 /* Responsive */
-@media (max-width: 768px) {
-  .admin-grid {
-    grid-template-columns: 1fr;
-  }
-  
+@media (min-width: 640px) {
   .channels-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-  
-  .admin-header h1 {
-    font-size: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
